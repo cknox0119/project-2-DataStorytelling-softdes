@@ -2,6 +2,9 @@ import requests
 import json
 import matplotlib.pyplot as plt
 import pandas as pd
+import numpy as np
+import matplotlib.ticker as plticker
+import csv
 
 # request of whatever input link
 # figure out type the data is --- json formatting, csv, excel, etc.
@@ -37,13 +40,17 @@ def format_column_names(column_names):
     return new_column_names
 
 # function formatting csv files:
-def format_csv_files(input_file_link):
-    data = requests.get(input_file_link) # may or may not need this line, may do request statement outside of function
-    with open('China_GDP.csv') as csvfile:
+def format_csv_files(input_file):
+    csv_data = pd.read_csv(input_file, sep=";")
+    # data = requests.get(input_file_link) # may or may not need this line, may do request statement outside of function
+    
+    with open(input_file) as csvfile:
         readCSV = csv.reader(csvfile, delimiter=',')
         for row in readCSV:
             if len(row) != 66:
                 print(row)
                 print()
 
-    China_GDP_data = pd.read_csv("China_GDP.csv")
+    csv_data = csv_data.drop(columns=['Country Code', 'Indicator Name', 'Indicator Code'])
+    # column_names = csv_data.columns.values
+return csv_data
