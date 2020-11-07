@@ -22,12 +22,12 @@ def format_json_files(input_data):
     for each in country_data_from_json:
         country_data.append(each["attributes"])
 
-    df = pd.DataFrame(columns = column_names)
+    df_json = pd.DataFrame(columns = column_names)
 
     for data in country_data:
-        df = df.append(data, ignore_index=True)
+        df_json = df_json.append(data, ignore_index=True)
 
-    return df
+    return df_json
 # used in the function above to remove text and underscores found before the year titles:
 def format_column_names(column_names):
     new_column_names = []
@@ -53,4 +53,4 @@ def format_csv_files(input_file):
 
     csv_data = csv_data.drop(columns=['Country Code', 'Indicator Name', 'Indicator Code'])
     # column_names = csv_data.columns.values
-return csv_data
+    return csv_data
