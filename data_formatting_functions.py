@@ -6,6 +6,21 @@ import numpy as np
 import matplotlib.ticker as plticker
 import csv
 
+
+
+# used in the function below to remove text and underscores found before the year titles:
+
+def format_column_names(column_names):
+    new_column_names = []
+    for each in column_names:
+        temp = each.split("_")
+        if len(temp) == 2:
+            new_column_names.append(temp[1])
+        else:
+            new_column_names.append(temp[0])
+    return new_column_names
+
+
 # request of whatever input link
 # figure out type the data is --- json formatting, csv, excel, etc.
     # input line for what the data is 
@@ -15,6 +30,7 @@ def format_json_files(input_data):
     data = input_data.json() # converts into json formatting input data into json format
     country_data_from_json = data["features"] # assign the input data's features to a seperate variable
 
+    column_names = country_data_from_json[0]["attributes"].keys()
     column_titles = format_column_names(column_names) # jump to outside function format_column_names to create the appropriate year titles
 
     # using pandas, below formats and adjusts the data to a proper dataframe:
@@ -29,15 +45,7 @@ def format_json_files(input_data):
 
     return df_json
 # used in the function above to remove text and underscores found before the year titles:
-def format_column_names(column_names):
-    new_column_names = []
-    for each in column_names:
-        temp = each.split("_")
-        if len(temp) == 2:
-            new_column_names.append(temp[1])
-        else:
-            new_column_names.append(temp[0])
-    return new_column_names
+
 
 # function formatting csv files:
 def format_csv_files(input_file):
